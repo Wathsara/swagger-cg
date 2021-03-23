@@ -174,6 +174,89 @@ components:
                     type: string
                   target:
                     type: string
+
+    graphNodeDetailResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "apex_1602018000/github.com."
+        _key:
+          type: string
+          example: "github.com."
+        avg:
+          type: string
+          example: "127"
+        dal:
+          type: string
+          example: "120"
+        maxmind:
+          type: object
+          example: 
+            $ref: '#/components/schemas/maxmindResponse'
+        positives:
+          type: string
+          example: "2"
+        rrtype:
+          type: string
+          example: "A1"
+        time_first:
+          type: string
+          example: "1602058500"
+        time_last:
+          type: string
+          example: "1602114505"
+        ts:
+          type: string
+          example: "1602018000"
+    maxmindResponse:
+      type: object
+      properties:
+        area_code:
+          type: integer
+          example: 0
+        asn:
+          type: string
+          example: "AS30148 SUCURI-SEC"
+        city:
+          type: string
+          example: "Menifee"
+        country_code:
+          type: string
+          example: "US"
+        country_code3:
+          type: string
+          example: "US"
+        country_name:
+          type: string
+          example: "United States"
+        dma_code:
+          type: integer
+          example: 803
+        latitude:
+          type: number
+          format: float
+          example: 33.664
+        longitude:
+          type: number
+          format: float
+          example: 31.664
+        metro_code:
+          type: integer
+          example: 803
+        postal_code:
+          type: string
+          example: "81700"
+        region:
+          type: string
+          example: "06"
+        region_name:
+          type: string
+          example: "US"
+        time_zone:
+          type: string
+          example: "America"
+          
     error:
       required:
         - code
