@@ -1,0 +1,190 @@
+openapi: 3.0.0
+servers:
+  - description: Server configurations
+    url: '{host}:{port}'
+    variables:
+      host:
+        default: http://localhost
+      port:
+        default: '1323'
+info:
+  description: This includes Endpoints for getting details to public using Tokens
+  version: "1.0.0"
+  title: CGraph Public API
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: graph
+    description: get the Details of the graph.
+  - name: search
+    description: Search domains and keywords.
+paths:
+  /graphsearch/<term>/<token>:
+    get:
+      tags:
+        - graph
+      summary: Retrieve the data of the selected node for past week
+      operationId: getDetails
+      description: |
+        By passing in the appropriate options, you can data of the selected node for past week
+      parameters:
+        - in: path
+          name: term
+          schema:
+            type: string
+          description: Search String
+        - in: path
+          name: token
+          schema:
+            type: string
+          description: Token generated from the web application
+          
+        - in: header         
+          name: Authorization
+          schema:
+            type: string
+            format: string
+          required: true  
+      responses:
+        '200':
+          description: Nodes and Egdges
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/graphResponseItem'
+              
+        '400':
+          description: 'Bad Requst'
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/error'
+        
+        '500':
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/error'
+
+
+  /search/<term>/<page>/<token>:
+    get:
+      tags:
+        - search
+      summary: Retrieve the data of the selected node for past week
+      operationId: getDetails
+      description: |
+        By passing in the appropriate options, you can data of the selected node for past week
+      parameters:
+        - in: path
+          name: term
+          schema:
+            type: string
+          description: Search String
+        - in: path
+          name: page
+          schema:
+            type: string
+          description: Pagination page
+        - in: path
+          name: token
+          schema:
+            type: string
+          description: Token generated from the web application
+          
+        - in: header         
+          name: Authorization
+          schema:
+            type: string
+            format: string
+          required: true  
+      responses:
+        '200':
+          description: Graph node detail
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/serchResponse'              
+        '400':
+          description: 'Bad Requst'
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/error'
+        
+        '500':
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/error'
+components:
+  schemas:
+    serchResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 350
+        page:
+          type: integer
+          example: 0
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              example:
+                $ref: '#/components/schemas/graphNodeDetailResponse'
+    graphResponseItem:
+      type: object
+      required:
+        - nodes
+        - links
+      properties:
+        nodes:
+          type: object
+          properties:
+            count:
+              type: integer 
+            result:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "apex/vpn.ac"
+                  type:
+                    type: string
+                    example: "apex"
+        links:
+          type: object
+          properties:
+            count:
+              type: integer
+            result:
+              type: array
+              items:
+                type: object
+                properties:
+                  source:
+                    type: string
+                  target:
+                    type: string
+    error:
+      required:
+        - code
+        - error
+      properties:
+        code:
+          type: string
+          example: CAR-500
+        error:
+          type: string
+          example: error message
+      type: object
+      description: response for errors        
+    
