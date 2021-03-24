@@ -1,12 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Server configurations
-    url: '{host}:{port}'
-    variables:
-      host:
-        default: http://localhost
-      port:
-        default: '1323'
+    url: 'https://public-api-cgraph.qcri.org'
 info:
   description: This includes Endpoints for getting details to public using Tokens
   version: "1.0.0"
